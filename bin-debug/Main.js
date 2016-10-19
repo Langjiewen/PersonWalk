@@ -32,7 +32,7 @@ var Player = (function (_super) {
         _super.call(this);
         this._main = _main;
         this._body = new egret.Bitmap;
-        this._body.texture = RES.getRes("idle01_png");
+        this._body.texture = RES.getRes("stand2_png");
         this._main.addChild(this._body);
         this._body.anchorOffsetX = 120;
         this._body.anchorOffsetY = 120;
