@@ -304,7 +304,7 @@ class Main extends egret.DisplayObjectContainer
         this._txInfo.textColor = 0x000000;
         this._txInfo.lineSpacing = 10;
         this._txInfo.multiline = true;
-        this._txInfo.text = "判断状态";
+       // this._txInfo.text = "判断状态";
         this._txInfo.x = 30;
         this._txInfo.y = 100;
         this.addChild(this._txInfo);
@@ -313,7 +313,7 @@ class Main extends egret.DisplayObjectContainer
         player.idle();
 
         this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, (evt: egret.TouchEvent) => {
-            this._txInfo.text += "walk\n";
+            //this._txInfo.text += "walk\n";
             player.move(evt.stageX, evt.stageY);
         }, this);
 
@@ -321,7 +321,7 @@ class Main extends egret.DisplayObjectContainer
 
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this)
+    
     }
 
     /**
@@ -336,44 +336,7 @@ class Main extends egret.DisplayObjectContainer
         return result;
     }
 
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    private startAnimation(result:Array<any>):void 
-    {
-        var self:any = this;
-
-        var parser = new egret.HtmlTextParser();
-        var textflowArr:Array<Array<egret.ITextElement>> = [];
-        for (var i:number = 0; i < result.length; i++) 
-        {
-            textflowArr.push(parser.parser(result[i]));
-        }
-
-        var textfield = self.textfield;
-        var count = -1;
-        var change:Function = function () 
-        {
-            count++;
-            if (count >= textflowArr.length) 
-            {
-                count = 0;
-            }
-            var lineArr = textflowArr[count];
-
-            self.changeDescription(textfield, lineArr);
-
-            var tw = egret.Tween.get(textfield);
-            tw.to({"alpha": 1}, 200);
-            tw.wait(2000);
-            tw.to({"alpha": 0}, 200);
-            tw.call(change, self);
-        };
-
-        change();
-    }
-
+   
     /**
      * 切换描述内容
      * Switch to described content
