@@ -27,186 +27,20 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-class Player extends egret.DisplayObjectContainer 
-{
-    _main: Main;
-    //_PA: PlayAnimation;
-    _label: egret.TextField;
-    _stateMachine: StateMachine;
-    _body: egret.Bitmap;
-    _ifidle: boolean;
-    _ifwalk: boolean;
-
-
-    constructor(_main: Main) {
-        super();
-        this._main = _main;
-        this._body = new egret.Bitmap;
-        this._body.texture = RES.getRes("stand2_png");
-        this._main.addChild(this._body);
-        this._body.anchorOffsetX = 120;
-        this._body.anchorOffsetY = 120;
-        this._stateMachine = new StateMachine();
-        this._body.x = this._main.stage.stageWidth / 2;
-        this._body.y = this._main.stage.stageHeight / 2;
-        this._ifidle = true;
-        this._ifwalk = false;
-
-    }
-
-    public move(targetX: number, targetY: number) {
-         egret.Tween.removeTweens(this._body);
-        if (targetX > this._body.x) 
-        {
-            this._body.skewY = 180;
-        }
-        else
-        {
-             this._body.skewY = 0;
-        }
-      
-        this._stateMachine.setState(new PlayerMoveState(this));
-
-        egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call( function(){this.idle()} ,this);
-       // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
-        //    if(this._body.x==targetX&&this._body.y==targetY){
-        //     this.idle();
-        // }
-    }
-
-    public idle() 
-    {
-
-        this._stateMachine.setState(new PlayerIdleState(this));
-       // this.startidle();
-    }
-
-
-    public startWalk() 
-    {
-        var list = ["walk1_png", "walk2_png", "walk3_png", "walk4_png", "walk5_png", "walk6_png", "walk7_png", "walk8_png", "walk9_png", "walk10_png", "walk11_png", "walk12_png","walk13_png","walk14_png","walk15_png","walk16_png"];
-        var count = -1;
-        egret.Ticker.getInstance().register(() => {
-            count = count + 0.2;
-            if (count >= list.length)
-            {
-                count = 0;
-            }
-            this._body.texture = RES.getRes(list[Math.floor(count)]);
-        }, this);
-        //egret.Tween.get(walk).to({ x: targetX, y: targetY }, 300, egret.Ease.sineIn);
-        // var tw = egret.Tween.get(walk);
-        // tw.wait(200);
-        // tw.call(change, self);
-    }
-
-    public startidle() 
-    {
-        var list = ["stand1_png", "stand2_png", "stand3_png"];
-        var count = -1;
-        egret.Ticker.getInstance().register(() => {
-            count = count + 0.2;
-            if (count >= list.length) 
-            {
-                count = 0;
-            }
-
-            this._body.texture = RES.getRes(list[Math.floor(count)]);
-
-        }, this);
-    }
-}
-
-class PlayerState implements State
- {
-
-    _player: Player;
-
-    constructor(player: Player) 
-    {
-        this._player = player;
-    }
-
-    onEnter() { }
-    onExit() { }
-}
-
-interface State
-{
-    onEnter();
-    onExit();
-}
-
-class PlayerMoveState extends PlayerState 
-{
-    onEnter() 
-    {
-        // egret.setTimeout(() => {
-        //     this._player.move;
-        // }, this, 500)
-        this._player._ifwalk = true;
-        this._player.startWalk();
-    }
-    onExit()
-    {
-        this._player._ifwalk = false;
-    }
-}
-
-class PlayerIdleState extends PlayerState 
-{
-    onEnter() 
-    {
-        // this._player._label.text = "idle";
-        // egret.setTimeout(() => {
-        //     this._player.idle();
-        // }, this, 500)
-         this._player._ifidle = true;
-         this._player.startidle();
-    }
-
-    onExit() 
-    {
-        this._player._ifidle = false;
-    }
-
-
-}
-
-class StateMachine 
-{
-    CurrentState: State;
-    setState(e: State) 
-    {
-        if (this.CurrentState != null)
-        {
-            this.CurrentState.onExit();
-        }
-        this.CurrentState = e;
-        e.onEnter();
-    }
-}
-
-
-class Main extends egret.DisplayObjectContainer 
-{
+class Main extends egret.DisplayObjectContainer {
 
     /**
      * 加载进度界面
      * Process interface loading
      */
     private loadingView:LoadingUI;
-    private _txInfo: egret.TextField;
 
-    public constructor() 
-    {
+    public constructor() {
         super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
-        this.once(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
-    private onAddToStage(event:egret.Event) 
-    {
+    private onAddToStage(event:egret.Event) {
         //设置加载进度界面
         //Config to load process interface
         this.loadingView = new LoadingUI();
@@ -222,8 +56,7 @@ class Main extends egret.DisplayObjectContainer
      * 配置文件加载完成,开始预加载preload资源组。
      * configuration file loading is completed, start to pre-load the preload resource group
      */
-    private onConfigComplete(event:RES.ResourceEvent):void 
-    {
+    private onConfigComplete(event:RES.ResourceEvent):void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
@@ -236,10 +69,8 @@ class Main extends egret.DisplayObjectContainer
      * preload资源组加载完成
      * Preload resource group is loaded
      */
-    private onResourceLoadComplete(event:RES.ResourceEvent):void 
-    {
-        if (event.groupName == "preload") 
-        {
+    private onResourceLoadComplete(event:RES.ResourceEvent):void {
+        if (event.groupName == "preload") {
             this.stage.removeChild(this.loadingView);
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
@@ -253,8 +84,7 @@ class Main extends egret.DisplayObjectContainer
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onItemLoadError(event:RES.ResourceEvent):void
-    {
+    private onItemLoadError(event:RES.ResourceEvent):void {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     }
 
@@ -262,8 +92,7 @@ class Main extends egret.DisplayObjectContainer
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onResourceLoadError(event:RES.ResourceEvent):void 
-    {
+    private onResourceLoadError(event:RES.ResourceEvent):void {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
@@ -275,10 +104,8 @@ class Main extends egret.DisplayObjectContainer
      * preload资源组加载进度
      * Loading process of preload resource group
      */
-    private onResourceProgress(event:RES.ResourceEvent):void 
-    {
-        if (event.groupName == "preload") 
-        {
+    private onResourceProgress(event:RES.ResourceEvent):void {
+        if (event.groupName == "preload") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
     }
@@ -289,8 +116,7 @@ class Main extends egret.DisplayObjectContainer
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene():void 
-    {
+    private createGameScene():void {
 
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
@@ -299,79 +125,35 @@ class Main extends egret.DisplayObjectContainer
         topMask.y = 33;
         this.addChild(topMask);
 
-        this._txInfo = new egret.TextField;
-        this._txInfo.size = 24;
-        this._txInfo.textColor = 0x000000;
-        this._txInfo.lineSpacing = 10;
-        this._txInfo.multiline = true;
-       // this._txInfo.text = "判断状态";
-        this._txInfo.x = 30;
-        this._txInfo.y = 100;
-        this.addChild(this._txInfo);
-
-        var player: Player = new Player(this);
+        var player: Player = new Player();
+        this.addChild(player);
         player.idle();
 
         this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, (evt: egret.TouchEvent) => {
-            //this._txInfo.text += "walk\n";
             player.move(evt.stageX, evt.stageY);
         }, this);
 
-
-
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-    
     }
 
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
      * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
      */
-    private createBitmapByName(name:string):egret.Bitmap 
-    {
+    private createBitmapByName(name:string):egret.Bitmap {
         var result = new egret.Bitmap();
         var texture:egret.Texture = RES.getRes(name);
         result.texture = texture;
         return result;
     }
 
-   
     /**
      * 切换描述内容
      * Switch to described content
      */
-    private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void 
-    {
+    private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
         textfield.textFlow = textFlow;
-    }
-
-     protected load(callback: Function): void 
-     {
-         var count: number = 0;
-         var self = this;
-         
-         var check = function () 
-         {
-             count++;
-             if (count == 2)
-             {
-                 callback.call(self);
-                }
-            }
-            
-            var loader = new egret.URLLoader();
-
-            loader.addEventListener(egret.Event.COMPLETE, function loadOver(e) 
-            {
-                var loader = e.currentTarget;
-                this._mcData = JSON.parse(loader.data);
-                check();
-            }, this);
-            
-            loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-            var request = new egret.URLRequest("resource/assets/mc/animation.json");
-            loader.load(request);
     }
 }
 

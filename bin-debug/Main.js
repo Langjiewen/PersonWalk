@@ -26,142 +26,11 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var Player = (function (_super) {
-    __extends(Player, _super);
-    function Player(_main) {
-        _super.call(this);
-        this._main = _main;
-        this._body = new egret.Bitmap;
-        this._body.texture = RES.getRes("stand2_png");
-        this._main.addChild(this._body);
-        this._body.anchorOffsetX = 120;
-        this._body.anchorOffsetY = 120;
-        this._stateMachine = new StateMachine();
-        this._body.x = this._main.stage.stageWidth / 2;
-        this._body.y = this._main.stage.stageHeight / 2;
-        this._ifidle = true;
-        this._ifwalk = false;
-    }
-    var d = __define,c=Player,p=c.prototype;
-    p.move = function (targetX, targetY) {
-        egret.Tween.removeTweens(this._body);
-        if (targetX > this._body.x) {
-            this._body.skewY = 180;
-        }
-        else {
-            this._body.skewY = 0;
-        }
-        this._stateMachine.setState(new PlayerMoveState(this));
-        egret.Tween.get(this._body).to({ x: targetX, y: targetY }, 2000).call(function () { this.idle(); }, this);
-        // if (this._body.x >= targetX - 5 && this._body.x <= targetX + 5 && this._body.y <= targetY + 5 && this._body.y >= targetY - 5) {
-        //    if(this._body.x==targetX&&this._body.y==targetY){
-        //     this.idle();
-        // }
-    };
-    p.idle = function () {
-        this._stateMachine.setState(new PlayerIdleState(this));
-        // this.startidle();
-    };
-    p.startWalk = function () {
-        var _this = this;
-        var list = ["walk1_png", "walk2_png", "walk3_png", "walk4_png", "walk5_png", "walk6_png", "walk7_png", "walk8_png", "walk9_png", "walk10_png", "walk11_png", "walk12_png", "walk13_png", "walk14_png", "walk15_png", "walk16_png"];
-        var count = -1;
-        egret.Ticker.getInstance().register(function () {
-            count = count + 0.2;
-            if (count >= list.length) {
-                count = 0;
-            }
-            _this._body.texture = RES.getRes(list[Math.floor(count)]);
-        }, this);
-        //egret.Tween.get(walk).to({ x: targetX, y: targetY }, 300, egret.Ease.sineIn);
-        // var tw = egret.Tween.get(walk);
-        // tw.wait(200);
-        // tw.call(change, self);
-    };
-    p.startidle = function () {
-        var _this = this;
-        var list = ["stand1_png", "stand2_png", "stand3_png"];
-        var count = -1;
-        egret.Ticker.getInstance().register(function () {
-            count = count + 0.2;
-            if (count >= list.length) {
-                count = 0;
-            }
-            _this._body.texture = RES.getRes(list[Math.floor(count)]);
-        }, this);
-    };
-    return Player;
-}(egret.DisplayObjectContainer));
-egret.registerClass(Player,'Player');
-var PlayerState = (function () {
-    function PlayerState(player) {
-        this._player = player;
-    }
-    var d = __define,c=PlayerState,p=c.prototype;
-    p.onEnter = function () { };
-    p.onExit = function () { };
-    return PlayerState;
-}());
-egret.registerClass(PlayerState,'PlayerState',["State"]);
-var PlayerMoveState = (function (_super) {
-    __extends(PlayerMoveState, _super);
-    function PlayerMoveState() {
-        _super.apply(this, arguments);
-    }
-    var d = __define,c=PlayerMoveState,p=c.prototype;
-    p.onEnter = function () {
-        // egret.setTimeout(() => {
-        //     this._player.move;
-        // }, this, 500)
-        this._player._ifwalk = true;
-        this._player.startWalk();
-    };
-    p.onExit = function () {
-        this._player._ifwalk = false;
-    };
-    return PlayerMoveState;
-}(PlayerState));
-egret.registerClass(PlayerMoveState,'PlayerMoveState');
-var PlayerIdleState = (function (_super) {
-    __extends(PlayerIdleState, _super);
-    function PlayerIdleState() {
-        _super.apply(this, arguments);
-    }
-    var d = __define,c=PlayerIdleState,p=c.prototype;
-    p.onEnter = function () {
-        // this._player._label.text = "idle";
-        // egret.setTimeout(() => {
-        //     this._player.idle();
-        // }, this, 500)
-        this._player._ifidle = true;
-        this._player.startidle();
-    };
-    p.onExit = function () {
-        this._player._ifidle = false;
-    };
-    return PlayerIdleState;
-}(PlayerState));
-egret.registerClass(PlayerIdleState,'PlayerIdleState');
-var StateMachine = (function () {
-    function StateMachine() {
-    }
-    var d = __define,c=StateMachine,p=c.prototype;
-    p.setState = function (e) {
-        if (this.CurrentState != null) {
-            this.CurrentState.onExit();
-        }
-        this.CurrentState = e;
-        e.onEnter();
-    };
-    return StateMachine;
-}());
-egret.registerClass(StateMachine,'StateMachine');
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
         _super.call(this);
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
-        this.once(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
     var d = __define,c=Main,p=c.prototype;
     p.onAddToStage = function (event) {
@@ -238,19 +107,10 @@ var Main = (function (_super) {
         topMask.graphics.endFill();
         topMask.y = 33;
         this.addChild(topMask);
-        this._txInfo = new egret.TextField;
-        this._txInfo.size = 24;
-        this._txInfo.textColor = 0x000000;
-        this._txInfo.lineSpacing = 10;
-        this._txInfo.multiline = true;
-        // this._txInfo.text = "判断状态";
-        this._txInfo.x = 30;
-        this._txInfo.y = 100;
-        this.addChild(this._txInfo);
-        var player = new Player(this);
+        var player = new Player();
+        this.addChild(player);
         player.idle();
         this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
-            //this._txInfo.text += "walk\n";
             player.move(evt.stageX, evt.stageY);
         }, this);
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
@@ -273,25 +133,7 @@ var Main = (function (_super) {
     p.changeDescription = function (textfield, textFlow) {
         textfield.textFlow = textFlow;
     };
-    p.load = function (callback) {
-        var count = 0;
-        var self = this;
-        var check = function () {
-            count++;
-            if (count == 2) {
-                callback.call(self);
-            }
-        };
-        var loader = new egret.URLLoader();
-        loader.addEventListener(egret.Event.COMPLETE, function loadOver(e) {
-            var loader = e.currentTarget;
-            this._mcData = JSON.parse(loader.data);
-            check();
-        }, this);
-        loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-        var request = new egret.URLRequest("resource/assets/mc/animation.json");
-        loader.load(request);
-    };
     return Main;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Main,'Main');
+//# sourceMappingURL=Main.js.map

@@ -10,6 +10,12 @@ var game_file_list = [
 	"libs/modules/tween/tween.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
+	"bin-debug/Player/Player.js",
+	"bin-debug/Player/PlayerState/PlayerState.js",
+	"bin-debug/Player/PlayerState/PlayerIdleState.js",
+	"bin-debug/Player/PlayerState/PlayerWalkState.js",
+	"bin-debug/State.js",
+	"bin-debug/Player/PlayerState/PlayerStateMachine.js",
 	//----auto game_file_list end----
 ];
 

@@ -1,110 +1,118 @@
 {
-	"groups": [
-		{
-			"keys": "stand1_png,stand2_png,stand3_png,walk1_png,walk2_png,walk3_png,walk4_png,walk5_png,walk6_png,walk7_png,walk8_png,walk9_png,walk10_png,walk11_png,walk12_png,walk13_png,walk14_png,walk15_png,walk16_png,description_json",
-			"name": "preload"
-		}
-	],
-	"resources": [
-		{
-			"url": "assets/stand1.png",
-			"type": "image",
-			"name": "stand1_png"
-		},
-		{
-			"url": "assets/stand2.png",
-			"type": "image",
-			"name": "stand2_png"
-		},
-	    {
-			"url": "assets/stand3.png",
-			"type": "image",
-			"name": "stand3_png"
-		},
-		{
-			"url": "assets/walk1.png",
-			"type": "image",
-			"name": "walk1_png"
-		},
-		{
-			"url": "assets/walk2.png",
-			"type": "image",
-			"name": "walk2_png"
-		},
-		{
-			"url": "assets/walk3.png",
-			"type": "image",
-			"name": "walk3_png"
-		},
-		{
-			"url": "assets/walk4.png",
-			"type": "image",
-			"name": "walk4_png"
-		},
-		{
-			"url": "assets/walk5.png",
-			"type": "image",
-			"name": "walk5_png"
-		},
-		{
-			"url": "assets/walk6.png",
-			"type": "image",
-			"name": "walk6_png"
-		},
-		{
-			"url": "assets/walk7.png",
-			"type": "image",
-			"name": "walk7_png"
-		},
-		{
-			"url": "assets/walk8.png",
-			"type": "image",
-			"name": "walk8_png"
-		},
-		{
-			"url": "assets/walk9.png",
-			"type": "image",
-			"name": "walk9_png"
-		},
-		{
-			"url": "assets/walk10.png",
-			"type": "image",
-			"name": "walk10_png"
-		},
-		{
-			"url": "assets/walk11.png",
-			"type": "image",
-			"name": "walk11_png"
-		},
-		{
-			"url": "assets/walk12.png",
-			"type": "image",
-			"name": "walk12_png"
-		},
-		{
-			"url": "assets/walk13.png",
-			"type": "image",
-			"name": "walk13_png"
-		},
-		{
-			"url": "assets/walk14.png",
-			"type": "image",
-			"name": "walk14_png"
-		},
-		{
-			"url": "assets/walk15.png",
-			"type": "image",
-			"name": "walk15_png"
-		},
-		{
-			"url": "assets/walk16.png",
-			"type": "image",
-			"name": "walk16_png"
-		},
-		{
-			"url": "config/description.json",
-			"type": "json",
-			"name": "description_json"
-		}
-	]
+	"groups":[
+	{
+		"keys":"bg_jpg,egret_icon_png,idle1_png,idle2_png,idle3_png,walk1_png,walk2_png,walk3_png,walk4_png,walk5_png,walk6_png,walk7_png,walk8_png,walk9_png,walk10_png,walk11_png,walk12_png,walk13_png,walk14_png,walk15_png,walk16_png,description_json",
+		"name":"preload"
+	}],
+	"resources":[
+	{
+		"name":"bg_jpg",
+		"type":"image",
+		"url":"assets/bg.jpg"
+	},
+	{
+		"name":"egret_icon_png",
+		"type":"image",
+		"url":"assets/egret_icon.png"
+	},
+	{
+		"name":"idle1_png",
+		"type":"image",
+		"url":"assets/idle1.png"
+	},
+	{
+		"name":"idle2_png",
+		"type":"image",
+		"url":"assets/idle2.png"
+	},
+	{
+		"name":"idle3_png",
+		"type":"image",
+		"url":"assets/idle3.png"
+	},
+	{
+		"name":"walk1_png",
+		"type":"image",
+		"url":"assets/walk1.png"
+	},
+	{
+		"name":"walk2_png",
+		"type":"image",
+		"url":"assets/walk2.png"
+	},
+	{
+		"name":"walk3_png",
+		"type":"image",
+		"url":"assets/walk3.png"
+	},
+	{
+		"name":"walk4_png",
+		"type":"image",
+		"url":"assets/walk4.png"
+	},
+	{
+		"name":"walk5_png",
+		"type":"image",
+		"url":"assets/walk5.png"
+	},
+	{
+		"name":"walk6_png",
+		"type":"image",
+		"url":"assets/walk6.png"
+	},
+	{
+		"name":"walk7_png",
+		"type":"image",
+		"url":"assets/walk7.png"
+	},
+	{
+		"name":"walk8_png",
+		"type":"image",
+		"url":"assets/walk8.png"
+	},
+	{
+		"name":"walk9_png",
+		"type":"image",
+		"url":"assets/walk9.png"
+	},
+	{
+		"name":"walk10_png",
+		"type":"image",
+		"url":"assets/walk10.png"
+	},
+	{
+		"name":"walk11_png",
+		"type":"image",
+		"url":"assets/walk11.png"
+	},
+	{
+		"name":"walk12_png",
+		"type":"image",
+		"url":"assets/walk12.png"
+	},
+	{
+		"name":"walk13_png",
+		"type":"image",
+		"url":"assets/walk13.png"
+	},
+	{
+		"name":"walk14_png",
+		"type":"image",
+		"url":"assets/walk14.png"
+	},
+	{
+		"name":"walk15_png",
+		"type":"image",
+		"url":"assets/walk15.png"
+	},
+	{
+		"name":"walk16_png",
+		"type":"image",
+		"url":"assets/walk16.png"
+	},
+	{
+		"name":"description_json",
+		"type":"json",
+		"url":"config/description.json"
+	}]
 }
